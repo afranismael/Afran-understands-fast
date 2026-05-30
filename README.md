@@ -1,273 +1,233 @@
-// Motivation Quotes
-const motivationQuotes = [
-    "Every task completed is progress made. Keep going!",
-    "The future belongs to those who organize their present.",
-    "Small tasks, big victories. You've got this!",
-    "Organization is the bridge between dreams and reality.",
-    "Master your tasks, master your life.",
-    "Done is better than perfect. Start now!",
-    "Your tasks are stepping stones to success.",
-    "Consistent action beats perfect planning.",
-    "Track your wins. Celebrate your progress.",
-    "A clear list is a clear mind."
-];
+import React from "react";
 
-// Todo App Class
-class TodoApp {
-    constructor() {
-        this.todos = [];
-        this.currentFilter = 'all';
-        this.init();
-    }
+export default function AfranMethod() {
+  const books = [
+    {
+      title: "The Afran Method",
+      description:
+        "A guide to understanding difficult topics faster using simple mental frameworks.",
+    },
+    {
+      title: "Think Before Others",
+      description:
+        "Strategies for improving critical thinking, problem solving, and decision making.",
+    },
+    {
+      title: "The Speed of Understanding",
+      description:
+        "Techniques for learning new skills efficiently and retaining knowledge for the long term.",
+    },
+  ];
 
-    init() {
-        this.loadFromStorage();
-        this.setupEventListeners();
-        this.render();
-        this.displayMotivation();
-    }
+  const principles = [
+    "Understand instead of memorize",
+    "Connect new information to existing knowledge",
+    "Ask powerful questions",
+    "Learn through teaching",
+    "Practice deliberate thinking",
+  ];
 
-    setupEventListeners() {
-        // Add button
-        document.getElementById('addBtn').addEventListener('click', () => this.addTodo());
-        
-        // Enter key
-        document.getElementById('todoInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') this.addTodo();
-        });
+  return (
+    <div className="bg-black text-white min-h-screen">
+      {/* Hero /}
+      <section className="min-h-screen flex flex-col justify-center items-center text-center px-6 bg-gradient-to-b from-blue-950 to-black">
+        <h1 className="text-6xl md:text-8xl font-bold text-yellow-400">
+          The Afran Method
+        </h1>
 
-        // Filter buttons
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => this.setFilter(e.target.dataset.filter));
-        });
+        <p className="text-xl mt-4 text-gray-300">
+          Understanding Faster. Learning Smarter. Thinking Deeper.
+        </p>
 
-        // Action buttons
-        document.getElementById('clearCompleted').addEventListener('click', () => this.clearCompleted());
-        document.getElementById('clearAll').addEventListener('click', () => this.clearAll());
-    }
+        <p className="max-w-3xl mt-8 text-lg text-gray-400">
+          Afran has developed a unique way of understanding complex ideas
+          quickly and turning knowledge into practical results.
+        </p>
 
-    addTodo() {
-        const input = document.getElementById('todoInput');
-        const text = input.value.trim();
+        <button className="mt-8 px-8 py-4 rounded-xl bg-yellow-500 text-black font-bold hover:scale-105 transition">
+          Explore The Method
+        </button>
+      </section>
 
-        if (!text) {
-            this.showNotification('Please enter a task!');
-            return;
-        }
+      {/ About /}
+      <section className="py-24 px-8 max-w-6xl mx-auto">
+        <h2 className="text-4xl font-bold text-yellow-400 mb-8">
+          About Afran
+        </h2>
 
-        if (text.length > 200) {
-            this.showNotification('Task is too long (max 200 characters)');
-            return;
-        }
+        <div className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-3xl p-8">
+          <p className="text-gray-300 leading-8">
+            Afran is driven by curiosity and a passion for learning.
+            Instead of relying on memorization, he focuses on patterns,
+            connections, and deep understanding. His goal is to break
+            difficult concepts into simple ideas that anyone can understand.
+          </p>
+        </div>
+      </section>
 
-        // Determine priority based on keywords
-        let priority = 'low';
-        if (text.toLowerCase().includes('urgent') || text.toLowerCase().includes('asap')) {
-            priority = 'high';
-        } else if (text.toLowerCase().includes('important')) {
-            priority = 'medium';
-        }
+      {/ Books /}
+      <section className="py-24 px-8 bg-blue-950/20">
+        <h2 className="text-4xl font-bold text-center text-yellow-400 mb-12">
+          Featured Books
+        </h2>
 
-        const todo = {
-            id: Date.now(),
-            text: text,
-            completed: false,
-            priority: priority,
-            createdAt: new Date().toLocaleDateString()
-        };
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {books.map((book) => (
+            <div
+              key={book.title}
+              className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-3xl p-8 hover:scale-105 transition"
+            >
+              <h3 className="text-2xl font-bold text-yellow-400">
+                {book.title}
+              </h3>
 
-        this.todos.unshift(todo);
-        this.saveToStorage();
-        this.render();
-        input.value = '';
-        input.focus();
-    }
+              <p className="text-gray-300 mt-4">
+                {book.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
 
-    toggleTodo(id) {
-        const todo = this.todos.find(t => t.id === id);
-        if (todo) {
-            todo.completed = !todo.completed;
-            this.saveToStorage();
-            this.render();
-        }
-    }
+      {/ Principles /}
+      <section className="py-24 px-8 max-w-6xl mx-auto">
+        <h2 className="text-4xl font-bold text-yellow-400 mb-12">
+          Learning Principles
+        </h2>
 
-    deleteTodo(id) {
-        this.todos = this.todos.filter(t => t.id !== id);
-        this.saveToStorage();
-        this.render();
-    }
+        <div className="grid md:grid-cols-2 gap-6">
+          {principles.map((item) => (
+            <div
+              key={item}
+              className="bg-white/5 border border-white/10 rounded-2xl p-6"
+            >
+              {item}
+            </div>
+          ))}
+        </div>
+      </section>
 
-    clearCompleted() {
-        const completedCount = this.todos.filter(t => t.completed).length;
-        
-        if (completedCount === 0) {
-            this.showNotification('No completed tasks to clear');
-            return;
-        }
+      {/ Digital Products /}
+      <section className="py-24 px-8 bg-blue-950/20">
+        <h2 className="text-4xl font-bold text-center text-yellow-400 mb-12">
+          Digital Products
+        </h2>
 
-        if (confirm(`Clear ${completedCount} completed task(s)?`)) {
-            this.todos = this.todos.filter(t => !t.completed);
-            this.saveToStorage();
-            this.render();
-            this.showNotification('Completed tasks cleared!');
-        }
-    }
+        <div className="grid md:grid-cols-5 gap-6 max-w-7xl mx-auto">
+          {[
+            "Learning Guides",
+            "Study Systems",
+            "Productivity Templates",
+            "Thinking Frameworks",
+            "E-books",
+          ].map((product) => (
+            <div
+              key={product}
+              className="bg-white/5 rounded-2xl p-6 text-center"
+            >
+              {product}
+            </div>
+          ))}
+        </div>
+      </section>
 
-    clearAll() {
-        if (this.todos.length === 0) {
-            this.showNotification('No tasks to clear');
-            return;
-        }
+      {/ Achievements /}
+      <section className="py-24 px-8 max-w-6xl mx-auto">
+        <h2 className="text-4xl font-bold text-yellow-400 mb-12">
+          Achievements
+        </h2>
 
-        if (confirm('Are you sure you want to delete ALL tasks? This cannot be undone.')) {
-            this.todos = [];
-            this.saveToStorage();
-            this.render();
-            this.showNotification('All tasks deleted!');
-        }
-    }
+        <div className="grid md:grid-cols-5 gap-6">
+          {[
+            "Fast Learner",
+            "Creative Thinker",
+            "Knowledge Explorer",
+            "Problem Solver",
+            "Future Author & Entrepreneur",
+          ].map((item) => (
+            <div
+              key={item}
+              className="bg-white/5 rounded-2xl p-6 text-center"
+            >
+              {item}
+            </div>
+          ))}
+        </div>
+      </section>
 
-    setFilter(filter) {
-        this.currentFilter = filter;
-        
-        // Update active button
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.filter === filter);
-        });
+      {/ Testimonials /}
+      <section className="py-24 px-8 bg-blue-950/20">
+        <h2 className="text-4xl text-center font-bold text-yellow-400 mb-12">
+          Testimonials
+        </h2>
 
-        this.render();
-    }
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="bg-white/5 p-6 rounded-2xl">
+            "Afran's method changed how I learn."
+          </div>
 
-    getFilteredTodos() {
-        switch (this.currentFilter) {
-            case 'completed':
-                return this.todos.filter(t => t.completed);
-            case 'active':
-                return this.todos.filter(t => !t.completed);
-            default:
-                return this.todos;
-        }
-    }
+          <div className="bg-white/5 p-6 rounded-2xl">
+            "Complex topics became much easier."
+          </div>
 
-    updateStats() {
-        const total = this.todos.length;
-        const completed = this.todos.filter(t => t.completed).length;
-        const remaining = total - completed;
+          <div className="bg-white/5 p-6 rounded-2xl">
+            "A practical system for deep understanding."
+          </div>
+        </div>
+      </section>
 
-        document.getElementById('totalTasks').textContent = total;
-        document.getElementById('completedTasks').textContent = completed;
-        document.getElementById('remainingTasks').textContent = remaining;
-    }
+      {/ Blog /}
+      <section className="py-24 px-8 max-w-6xl mx-auto">
+        <h2 className="text-4xl font-bold text-yellow-400 mb-12">
+          Blog
+        </h2>
 
-    render() {
-        const list = document.getElementById('todoList');
-        const emptyState = document.getElementById('emptyState');
-        const filteredTodos = this.getFilteredTodos();
+        <div className="grid md:grid-cols-5 gap-6">
+          {[
+            "Learning Faster",
+            "Building Intelligence",
+            "Productivity",
+            "Memory Techniques",
+            "Personal Growth",
+          ].map((article) => (
+            <div
+              key={article}
+              className="bg-white/5 rounded-2xl p-6"
+            >
+              {article}
+            </div>
+          ))}
+        </div>
+      </section>
 
-        list.innerHTML = '';
+      {/ Contact /}
+      <section className="py-24 px-8 bg-blue-950/20">
+        <h2 className="text-4xl text-center font-bold text-yellow-400 mb-12">
+          Contact
+        </h2>
 
-        if (filteredTodos.length === 0) {
-            list.style.display = 'none';
-            emptyState.style.display = 'flex';
-        } else {
-            list.style.display = 'block';
-            emptyState.style.display = 'none';
+        <form className="max-w-xl mx-auto flex flex-col gap-4">
+          <input
+            placeholder="Your Email"
+            className="p-4 rounded-xl bg-white/10"
+          />
 
-            filteredTodos.forEach(todo => {
-                const li = document.createElement('li');
-                li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
-                li.innerHTML = `
-                    <input 
-                        type="checkbox" 
-                        class="todo-checkbox" 
-                        ${todo.completed ? 'checked' : ''}
-                        onchange="app.toggleTodo(${todo.id})"
-                    >
-                    <span class="todo-text">${this.escapeHtml(todo.text)}</span>
-                    <span class="todo-priority ${todo.priority}">${todo.priority}</span>
-                    <span class="todo-date">${todo.createdAt}</span>
-                    <button class="delete-btn" onclick="app.deleteTodo(${todo.id})">Delete</button>
-                `;
-                list.appendChild(li);
-            });
-        }
+          <textarea
+            placeholder="Message"
+            rows="5"
+            className="p-4 rounded-xl bg-white/10"
+          />
 
-        this.updateStats();
-    }
+          <button className="bg-yellow-500 text-black font-bold p-4 rounded-xl">
+            Send Message
+          </button>
+        </form>
+      </section>
 
-    escapeHtml(text) {
-        const map = {
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#039;'
-        };
-        return text.replace(/[&<>"']/g, m => map[m]);
-    }
-
-    displayMotivation() {
-        const quote = motivationQuotes[Math.floor(Math.random() * motivationQuotes.length)];
-        document.getElementById('motivationQuote').textContent = `💡 ${quote}`;
-    }
-
-    showNotification(message) {
-        // Create a simple notification
-        const notification = document.createElement('div');
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            font-weight: 600;
-            z-index: 10000;
-            animation: slideInRight 0.3s ease-out;
-            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.4);
-        `;
-        notification.textContent = message;
-        document.body.appendChild(notification);
-
-        setTimeout(() => {
-            notification.style.animation = 'slideOutRight 0.3s ease-out';
-            setTimeout(() => notification.remove(), 300);
-        }, 3000);
-    }
-
-    saveToStorage() {
-        localStorage.setItem('todos', JSON.stringify(this.todos));
-    }
-
-    loadFromStorage() {
-        const stored = localStorage.getItem('todos');
-        if (stored) {
-            try {
-                this.todos = JSON.parse(stored);
-            } catch (e) {
-                console.error('Error loading todos from storage:', e);
-                this.todos = [];
-            }
-        }
-    }
+      {/ Footer */}
+      <footer className="py-8 text-center border-t border-white/10 text-gray-400">
+        The Afran Method © 2026 — Learning Without Limits.
+      </footer>
+    </div>
+  );
 }
-
-// Initialize the app
-let app;
-document.addEventListener('DOMContentLoaded', () => {
-    app = new TodoApp();
-});
-
-// Add slide out animation
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideOutRight {
-        to {
-            opacity: 0;
-            transform: translateX(100px);
-        }
-    }
-`;
-document.head.appendChild(style);
